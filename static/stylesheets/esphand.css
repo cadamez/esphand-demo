@@ -1,0 +1,49 @@
+/* # Dashboard 
+================================================== */
+
+.three.by-day {
+    background-color: honeydew;
+}
+.storySet {
+    min-height: 3em;
+    margin: 0;
+}
+.storySet li{
+    border: 1px solid #dedede;
+    background: white;
+    padding: 1em;
+}
+.storySet li.addStory {
+    padding: 0.5em;
+    border: 1px dashed #dedede;
+}
+span.meta {
+    float: right;
+}
+span.label {
+    max-width: 2em;
+    text-transform: capitalize;
+    font-size: 80%;
+    font-weight: bold;
+    padding: 1em;
+}
+span.writer {
+    background-color: darkturquoise;
+}
+span.editor {
+    background-color: pink;
+}
+span.writer-editor {
+    background-color: lavender;
+}
+
+/* # Edit a story
+================================================== */
+
+.timeline .revision {
+    float:left;
+}
+.warning {
+    background-color: #FFF059;
+    padding: 1em 9em;
+}

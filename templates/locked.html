@@ -1,0 +1,37 @@
+{% extends 'base.html' %}
+{% block content %}
+<p class="warning"><a href='#'>Mary Sue</a> is editing this article right now.</p>
+<div class="container">
+	<form action="/new" method="post">
+		<input type="text" name="title" placeholder="title" class="sixteen columns" />
+		<input type="text" name="dek" placeholder="A nice long dek" class="sixteen columns" />
+		<fieldset class="one column alpha timeline">
+			<div class="revision">
+				<label>rev 1</label>
+				<input name="rev1" id="rev1" type="radio" name="revisions" value="1" />
+			</div>
+			<div class="revision">
+				<label>rev 2</label>
+				<input name="rev2" id="rev2" type="radio" name="revisions" value="2" />
+			</div>
+			<div class="revision">
+				<label>rev 3</label>
+				<input name="rev3" id="rev3" type="radio" name="revisions" value="3" />
+			</div>
+			<div class="revision">
+				<label>rev 4</label>
+				<input name="rev4" id="rev4" type="radio" name="revisions" value="4" />
+			</div>
+			<div class="revision">
+				<label>rev 5</label>
+				<input name="rev5" id="rev5" type="radio" name="revisions" value="5" />
+			</div>
+		</fieldset>
+		<textarea name="content" spellcheck="true" rows="20" class="fifteen columns omega"></textarea>
+
+		<div class="offset-by-one">
+		<input type="submit" />
+		</div>
+	</form>
+</div>
+{% endblock %}

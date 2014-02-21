@@ -1,0 +1,9 @@
+{% extends 'base.html' %}
+{% block content %}
+	<form action="/new" method="post" class="container">
+		<input type="text" name="title" placeholder="title" class="sixteen columns" />
+		<input type="text" name="dek" placeholder="A nice long dek" class="sixteen columns" />
+		<textarea name="content" spellcheck="true" rows="20" class="sixteen columns"></textarea>
+		<input type="submit" />
+	</form>
+{% endblock %}
