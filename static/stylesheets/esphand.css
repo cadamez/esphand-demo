@@ -47,3 +47,8 @@ span.writer-editor {
     background-color: #FFF059;
     padding: 1em 9em;
 }
+input.editStory {
+    border: 0;
+}
+.editStory.title { font-size: 3em; }
+.editStory.dek { font-size: 2em; }
