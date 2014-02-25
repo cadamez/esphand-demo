@@ -26,5 +26,9 @@ def edit_article():
 		template = 'revisions.html'
 	return render_template(template)
 
+@app.route("/preview")
+def preview_article():
+	return render_template("preview.html")
+
 if __name__ == "__main__":
 	app.run(debug=True)

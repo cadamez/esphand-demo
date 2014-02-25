@@ -1,0 +1,16 @@
+{% extends 'base.html' %}
+{% block content %}
+<div class="container">
+	{% if ready_to_publish %}
+	<div class="row">
+	</div>
+	{% else %}
+	{% endif %}
+	<form action="/new" method="post">
+		<input type="text" name="title" placeholder="title" class="sixteen columns editStory title" />
+		<input type="text" name="dek" placeholder="A nice long dek" class="sixteen columns editStory dek" />
+		<textarea name="content" spellcheck="true" rows="20" class="sixteen columns"></textarea>
+		<input type="submit" />
+	</form>
+</div>
+{% endblock %}
