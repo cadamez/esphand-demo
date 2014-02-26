@@ -1,5 +1,6 @@
 from flask import Flask, render_template, request
 from datetime import date, timedelta
+import os
 
 app = Flask(__name__)
 
@@ -31,4 +32,4 @@ def preview_article():
 	return render_template("preview.html")
 
 if __name__ == "__main__":
-	app.run(debug=True)
+	app.run(debug=os.getenv('FLASK_DEBUG', False))
