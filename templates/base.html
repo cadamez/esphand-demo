@@ -22,11 +22,18 @@
   <link rel="stylesheet" href="{{ url_for('static', filename='stylesheets/skeleton.css')}}">
   <link rel="stylesheet" href="{{ url_for('static', filename='stylesheets/layout.css')}}">
   <link rel="stylesheet" href="{{ url_for('static', filename='stylesheets/esphand.css')}}">
+	{% for css_path in css_includes %}
+	<link rel="stylesheet" href="{{ url_for('static', filename=css_path)}}">
+	{% endfor %}
 
 	<!--[if lt IE 9]>
 		<script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
 	<![endif]-->
 
+        <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
+	{% for script_path in js_includes %}
+	<script src="{{ url_for('static', filename=script_path)}}"></script>
+	{% endfor %}
 
 </head>
 <body>

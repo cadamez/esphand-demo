@@ -1,38 +1,62 @@
 {% extends 'base.html' %}
 {% block content %}
+	<div class="container">
 <nav>
+	<p>Logged in as <em>{{ username }}</em></p>
 	<ul>
 		<li><a href="/new">New story</a></li>
 	</ul>
 </nav>
-	<div class="container">
-		<h2>My upcoming stories</h2>
-		<div class="row">
-			<div class="three columns by-day">
-				<p>Tuesday</p>
-			</div>
-			<div class="thirteen columns">
-				<ul id="tuesdayStories" class="storySet">
-					<li><a href="/edit">Object-based coherent knowledge user</a>
-						<span class="meta">
-							<span class="label writer">CA</span>
-							<span class="label editor">JF</span>
-						</span>
-						<br />
-						<a href="#">Preview: mojo.com/preview/article/1</a>
-					</li>
-				</ul>
-			</div>
-		</div>
-		<div class="three columns by-day">
-			<p>Wednesday</p>
-		</div>
-		<div class="thirteen columns">
-			<ul id="wednesdayStories" class="storySet">
-				<li>Virtual optimal product</li>
-				<li>Focused actuating hub</li>
-			</ul>
-		</div>
+		<h2>Upcoming stories</h2>
+		<ul class="upcoming-stories">
+			<li class="row edited">
+					<a href="/edit" class="six columns">Object-based coherent knowledge user</a>
+					<a href="#" class="two columns">Preview</a>
+			</li>
+			<li class="row edited">
+					<a href="/edit" class="six columns">Multi-tiered high-level structure for deploy wireless systems</a>
+					<a href="#" class="two columns">Preview</a>
+			</li>
+			<li class="row edited">
+					<a href="/edit" class="six columns">Team-oriented reciprocal leverage on enhance B2C infrastructures</a>
+					<a href="#" class="two columns">Preview</a>
+			</li>
+			<li class="row">
+					<a href="/edit" class="six columns">Right-sized content-based approach with repurpose extensible e-services</a>
+					<a href="#" class="two columns">Preview</a>
+			</li>
+			<li class="row">
+					<a href="/edit" class="six columns">Profound incremental throughput by productize dot-com vortals</a>
+					<a href="#" class="two columns">Preview</a>
+			</li>
+		</ul>
+		<a href="/upcoming-stories">Actually you have (12) more...</a>
+
+		<br class="clear" />
+		<h2>Published stories</h2>
+		<ul>
+			<li class="row">
+					<a href="/edit" class="six columns">Public-key 24 hour collaboration for engineer back-end e-commerce</a>
+					<a href="#" class="two columns">Preview</a>
+			</li>
+			<li class="row">
+					<a href="/edit" class="six columns">Persistent actuating concept on engage ubiquitous e-services</a>
+					<a href="#" class="two columns">Preview</a>
+			</li>
+			<li class="row">
+					<a href="/edit" class="six columns">Adaptive reciprocal model for redefine B2B metrics</a>
+					<a href="#" class="two columns">Preview</a>
+			</li>
+			<li class="row">
+					<a href="/edit" class="six columns">Universal stable knowledge user with disintermediate holistic functionalities</a>
+					<a href="#" class="two columns">Preview</a>
+			</li>
+			<li class="row">
+					<a href="/edit" class="six columns">Front-line multi-state hub for extend wireless technologies</a>
+					<a href="#" class="two columns">Preview</a>
+			</li>
+		</ul>
+		<a href="/past-stories">Actually you have (147) more...</a>
 	</div>
 
 
