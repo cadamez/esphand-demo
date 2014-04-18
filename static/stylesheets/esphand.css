@@ -70,6 +70,9 @@ span.writer-editor {
 
 /* # Edit a story
 ================================================== */
+#add_story_elements {
+	
+}
 
 .timeline .revision {
     float:left;
