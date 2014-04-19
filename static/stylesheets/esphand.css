@@ -32,48 +32,17 @@
 /* # Dashboard 
 ================================================== */
 
+#dashboard_nav li { display: inline; }
+
 .upcoming-stories .edited {
     background-color: #BFF1AA;
 }
 .upcoming-stories li{
-	padding: 1em 0;
-}
-.storySet li.addStory {
-    padding: 0.5em;
-    border: 1px dashed #dedede;
-}
-.icon-button {
-	display: inline-block;
-	padding: 5px;
-}
-.icon-button:hover {
-	background-color: green;
-	color: white;
-	border-radius: 8px;
-}
-span.label {
-    max-width: 2em;
-    text-transform: capitalize;
-    font-size: 80%;
-    font-weight: bold;
-    padding: 1em;
-}
-span.writer {
-    background-color: darkturquoise;
-}
-span.editor {
-    background-color: pink;
-}
-span.writer-editor {
-    background-color: lavender;
+	/*padding: 1em 0;*/
 }
 
 /* # Edit a story
 ================================================== */
-#add_story_elements {
-	
-}
-
 .timeline .revision {
     float:left;
 }
@@ -81,11 +50,15 @@ span.writer-editor {
     background-color: #FFF059;
     padding: 1em 9em;
 }
-input.editStory {
-    border: 0;
+form.article { 
+	margin-left: 5%;
 }
-.editStory.title { font-size: 3em; }
-.editStory.dek { font-size: 2em; }
+form.article * { 
+	font-size: 2em;
+}
+form.article input[type="text"], form.article textarea {
+	width: 90%;
+}
 
 /* # Section queue arrangement 
 ================================================== */

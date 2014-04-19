@@ -1,4 +1,4 @@
-from flask import Flask, render_template, request, session, redirect, url_for, escape
+from flask import Flask, render_template, request, session, redirect, url_for, escape, flash
 from datetime import date, timedelta
 import os
 
@@ -7,36 +7,35 @@ app = Flask(__name__)
 @app.route("/")
 def dashboard():
     if 'username' in session:
-        return render_template('dashboard.html', username=escape(session['username'])) 
+        session['writer_stories'] = example_stories() 
+        return render_template('dashboard.html', username=escape(session['username']), upcoming_stories=session['writer_stories']) 
     else:
         return redirect(url_for('login'))
 
 @app.route("/upcoming")
 def upcoming():
-	return render_template('upcoming.html') 
+    return render_template('upcoming.html') 
 
 @app.route("/new")
 def new_article():
-	return render_template('new_article.html')
+    return render_template('new_article.html')
 @app.route("/new", methods=['POST'])
-def other():
-	return str(request.form)
+def create_article():
+    session['writer_stories'].append({'title': request.form['title'], 'content': request.form['content']})
+    flash("Created article \"%s\"" % request.form['title'])
+    return redirect(url_for('dashboard'))
 
-@app.route("/edit")
-def edit_article():
-	if request.args.get('lock', '') == 'true':
-		template = 'locked.html'
-	else:
-		template = 'revisions.html'
-	return render_template(template)
+@app.route("/story/<storyid>/edit")
+def edit_article(storyid):
+    return render_template("new_article.html", story = session['writer_stories'][int(storyid)])
 
 @app.route("/preview")
 def preview_article():
-	return render_template("preview.html")
+    return render_template("preview.html")
 
 @app.route("/sections/<sectionname>/edit")
 def edit_section(sectionname):
-	return render_template("arrange_section.html")
+    return render_template("arrange_section.html")
 
 #@app.route('/')
 #def index():
@@ -57,10 +56,19 @@ def login():
 def logout():
     # remove the username from the session if it's there
     session.pop('username', None)
-    return redirect(url_for('index'))
+    #flash("You have logged out.")
+    return redirect(url_for('dashboard'))
+
+def example_stories():
+    return [
+            {'title': "Multi-tiered high-level structure for deploy wireless systems", 'content': "This is some example content here", 'locked': True, 'revision_ids': [1,2,3]},
+            {'title': "Team-oriented reciprocal leverage on enhance B2C infrastructures", 'content': "This is an example of content here as well", 'locked': False, 'revision_ids': [1,2,3]},
+            {'title': "Crazy idea about cats in hats", 'content': "Call the cat lady!!", 'locked': False}
+    ]
 
 # set the secret key.  keep this really secret:
 app.secret_key = 'A0Zr98j/3yX R~XHH!jmN]LWX/,?RT'
 
 if __name__ == "__main__":
-	app.run(debug=bool(os.getenv('FLASK_DEBUG', False)))
+    app.run(debug=True)
+    #app.run(debug=bool(os.getenv('FLASK_DEBUG', False)))

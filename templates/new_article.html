@@ -1,16 +1,23 @@
 {% extends 'base.html' %}
 {% block content %}
+{% if story['locked'] %}
+<p class="warning"><a href='#'>Mary Sue</a> is editing this article right now.</p>
+{% endif %}
 
+{% if not story['locked'] %}
 <menu id="add_story_elements" type="toolbar">
 	<button type="button"><i class="batch" data-icon="&#xF040;"></i>Add picture</button>
 	<button type="button"><i class="batch" data-icon="&#xF03A;"></i>Add sound</button>
+	<button type="button"><i class="batch" data-icon="&#xF17C;"></i>View history</button>
 </menu>
+{% endif %}
 
-	<form action="/new" method="post" class="container">
-		<input type="text" name="title" placeholder="title" class="sixteen columns editStory title" />
-		<input type="text" name="dek" placeholder="A nice long dek" class="sixteen columns editStory dek" />
-		<textarea name="content" spellcheck="true" rows="20" class="sixteen columns"></textarea>
-		<input type="submit" />
-	</form>
+<form action="/new" method="post" class="article">
+	<input type="text" name="title" placeholder="title" spellcheck="true" value="{{ story['title'] }}" />
+	<textarea name="content" spellcheck="true" rows="15">{{ story['content'] }}</textarea>
+	{% if not story['locked'] %}
+		<input type="submit" value="Save" />
+	{% endif %}
+</form>
 
 {% endblock %}
