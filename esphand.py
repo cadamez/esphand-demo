@@ -39,6 +39,15 @@ def edit_article(storyid):
         print(request.form)
         return redirect(url_for('dashboard'))
 
+@app.route("/import")
+def import_article():
+    return render_template("import.html")
+@app.route("/import", methods=['POST'])
+def process_import():
+    # Pretend to process that Word document here...
+    word_doc_body = "Pretend that this text came from the Word document that you uploaded!!"
+    return render_template('new_article.html', role=escape(session['username']), story_is_locked=False, story={'title': request.form['worddoc'], 'content': word_doc_body})
+
 @app.route("/preview")
 def preview_article():
     return render_template("preview.html")
