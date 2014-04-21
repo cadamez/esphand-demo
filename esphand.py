@@ -88,8 +88,7 @@ def example_stories():
     ]
 
 # set the secret key.  keep this really secret:
-app.secret_key = 'A0Zr98j/3yX R~XHH!jmN]LWX/,?RT'
+app.secret_key = os.urandom(32)
 
 if __name__ == "__main__":
-    app.run(debug=True)
-    #app.run(debug=bool(os.getenv('FLASK_DEBUG', False)))
+    app.run(debug=bool(os.getenv('FLASK_DEBUG', False)))
