@@ -7,9 +7,11 @@ app = Flask(__name__)
 @app.route("/")
 def dashboard():
     if 'username' in session:
-        session['writer_stories'] = example_stories() 
+        if not 'writer_stories' in session:
+            session['writer_stories'] = example_stories() 
         username=escape(session['username'])
         template_name = "dashboard_for_%s.html" % username
+        print(session['writer_stories'])
         return render_template(template_name, username=username, upcoming_stories=session['writer_stories']) 
     else:
         return redirect(url_for('login'))
@@ -24,8 +26,7 @@ def new_article():
     return render_template('new_article.html', role=escape(session['username']), story_is_locked=False, story={'title': "", 'content': ''})
 @app.route("/new", methods=['POST'])
 def create_article():
-    print(request.form)
-    session['writer_stories'].append({'title': request.form['title'], 'content': request.form['content']})
+    session['writer_stories'].append({'title': request.form['title'], 'content': request.form['content'], 'locked': False})
     flash("Created article \"%s\"" % request.form['title'])
     return redirect(url_for('dashboard'))
 
@@ -34,7 +35,8 @@ def edit_article(storyid):
     form_action = "/story/%s/edit" % storyid
     if request.method == 'GET':
         story = session['writer_stories'][int(storyid)]
-        return render_template("new_article.html", story=story, role=escape(session['username']), action=form_action, story_is_locked=story['locked'] )
+        username = escape(session['username'])
+        return render_template("new_article.html", story=story, username=username, role=username, action=form_action, story_is_locked=story['locked'] )
     else:
         print(request.form)
         return redirect(url_for('dashboard'))
@@ -46,7 +48,7 @@ def import_article():
 def process_import():
     # Pretend to process that Word document here...
     word_doc_body = "Pretend that this text came from the Word document that you uploaded!!"
-    return render_template('new_article.html', role=escape(session['username']), story_is_locked=False, story={'title': request.form['worddoc'], 'content': word_doc_body})
+    return render_template('new_article.html', role=escape(session['username']), story_is_locked=False, story={'title': request.form['worddoc'], 'content': word_doc_body, 'locked': False})
 
 @app.route("/preview")
 def preview_article():

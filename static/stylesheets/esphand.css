@@ -32,7 +32,10 @@
 /* # Dashboard 
 ================================================== */
 
-#dashboard_nav li { display: inline; }
+#dashboard_nav { background-color: #8E8E8D; }
+#dashboard_nav ul { margin: 0; }
+#dashboard_nav li { display: inline; margin: 0; line-height: 1;}
+#dashboard_nav p,  #dashboard_nav p a{ color: white; }
 
 .upcoming-stories .edited { background-color: #A5FFFF; }
 .editable-stories .unedited { background-color: #FFEFA4; }

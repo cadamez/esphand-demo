@@ -37,6 +37,19 @@
 
 </head>
 <body>
+	<nav id="dashboard_nav">
+		<div class="container">
+			<ul class="twelve columns">
+				<li><a href="/new" class="button"><i class="batch large" data-icon="&#xF10B;"></i> New story</a></li>
+				<li><a href="/import" class="button"><i class="batch large" data-icon="&#xF13E;"></i> Import from Word</a></li>
+			</ul>
+			<p class="four columns">Logged in as <em>{{ username }}</em>.
+				<br /> 
+				<a href="/logout" ><i class="batch" data-icon="&#xF069;"></i>Log out</a></li>
+			</p>
+		</div>
+	</nav>
+
 	{% with messages = get_flashed_messages() %}
 	  {% if messages %}
 		<ul class=flashes>
