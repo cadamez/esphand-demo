@@ -34,9 +34,9 @@
 
 #dashboard_nav li { display: inline; }
 
-.upcoming-stories .edited {
-    background-color: #BFF1AA;
-}
+.upcoming-stories .edited { background-color: #A5FFFF; }
+.editable-stories .unedited { background-color: #FFEFA4; }
+
 .upcoming-stories li{
 	/*padding: 1em 0;*/
 }
@@ -54,7 +54,7 @@ form.article {
 	margin-left: 5%;
 }
 form.article * { 
-	font-size: 2em;
+	font-size: 2rem;
 }
 form.article input[type="text"], form.article textarea {
 	width: 90%;

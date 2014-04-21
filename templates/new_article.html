@@ -1,3 +1,15 @@
+{% macro send_to_editor() %}
+		<fieldset>
+			<select id="" name="editor_id">
+				<option value="">(Select an editor)</option>
+				<option value="1">Juana Molina</option>
+				<option value="2">Scott Kim</option>
+				<option value="3">Grace Jones</option>
+			</select>
+			<input type="submit" value="Send to editor" />
+		</fieldset>
+{% endmacro %}
+
 {% extends 'base.html' %}
 {% block content %}
 {% if story['locked'] %}
@@ -5,18 +17,31 @@
 {% endif %}
 
 {% if not story['locked'] %}
+{# Not sure what goes in the menu yet...
 <menu id="add_story_elements" type="toolbar">
 	<button type="button"><i class="batch" data-icon="&#xF040;"></i>Add picture</button>
 	<button type="button"><i class="batch" data-icon="&#xF03A;"></i>Add sound</button>
 	<button type="button"><i class="batch" data-icon="&#xF17C;"></i>View history</button>
-</menu>
+</menu> #}
 {% endif %}
 
-<form action="/new" method="post" class="article">
+<form action="{{ action|default("/new") }}" method="post" class="article">
 	<input type="text" name="title" placeholder="title" spellcheck="true" value="{{ story['title'] }}" />
-	<textarea name="content" spellcheck="true" rows="15">{{ story['content'] }}</textarea>
+	<textarea name="content" spellcheck="true" rows="10">{{ story['content'] }}</textarea>
 	{% if not story['locked'] %}
 		<input type="submit" value="Save" />
+
+		{% if role == 'writer' %}
+		{{ send_to_editor() }} 
+		{% endif %}
+
+		{% if story['revision_ids']|length %}
+		<fieldset name="publishing_data">
+			<label>Publish date:</label>
+			<input id="publish_datetime" name="publish_datetime" type="datetime-local">
+			<input type="submit" value="Set" />
+		</fieldset>
+		{% endif %}
 	{% endif %}
 </form>
 

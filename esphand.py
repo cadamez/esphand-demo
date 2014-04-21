@@ -8,7 +8,9 @@ app = Flask(__name__)
 def dashboard():
     if 'username' in session:
         session['writer_stories'] = example_stories() 
-        return render_template('dashboard.html', username=escape(session['username']), upcoming_stories=session['writer_stories']) 
+        username=escape(session['username'])
+        template_name = "dashboard_for_%s.html" % username
+        return render_template(template_name, username=username, upcoming_stories=session['writer_stories']) 
     else:
         return redirect(url_for('login'))
 
@@ -18,16 +20,22 @@ def upcoming():
 
 @app.route("/new")
 def new_article():
-    return render_template('new_article.html')
+    return render_template('new_article.html', role=escape(session['username']))
 @app.route("/new", methods=['POST'])
 def create_article():
+    print(request.form)
     session['writer_stories'].append({'title': request.form['title'], 'content': request.form['content']})
     flash("Created article \"%s\"" % request.form['title'])
     return redirect(url_for('dashboard'))
 
-@app.route("/story/<storyid>/edit")
+@app.route("/story/<int:storyid>/edit", methods=['GET', 'POST', 'PATCH'])
 def edit_article(storyid):
-    return render_template("new_article.html", story = session['writer_stories'][int(storyid)])
+    form_action = "/story/%s/edit" % storyid
+    if request.method == 'GET':
+        return render_template("new_article.html", story=session['writer_stories'][int(storyid)], role=escape(session['username']), action=form_action)
+    else:
+        print(request.form)
+        return redirect(url_for('dashboard'))
 
 @app.route("/preview")
 def preview_article():
@@ -63,7 +71,7 @@ def example_stories():
     return [
             {'title': "Multi-tiered high-level structure for deploy wireless systems", 'content': "This is some example content here", 'locked': True, 'revision_ids': [1,2,3]},
             {'title': "Team-oriented reciprocal leverage on enhance B2C infrastructures", 'content': "This is an example of content here as well", 'locked': False, 'revision_ids': [1,2,3]},
-            {'title': "Crazy idea about cats in hats", 'content': "Call the cat lady!!", 'locked': False}
+            {'title': "Crazy idea about cats in hats", 'content': "Call the cat lady!!", 'locked': False, 'revision_ids': []}
     ]
 
 # set the secret key.  keep this really secret:
