@@ -12,11 +12,11 @@
 
 {% extends 'base.html' %}
 {% block content %}
-{% if story['locked'] %}
+{% if story_is_locked %}
 <p class="warning"><a href='#'>Mary Sue</a> is editing this article right now.</p>
 {% endif %}
 
-{% if not story['locked'] %}
+{% if not story_is_locked %}
 {# Not sure what goes in the menu yet...
 <menu id="add_story_elements" type="toolbar">
 	<button type="button"><i class="batch" data-icon="&#xF040;"></i>Add picture</button>
@@ -26,7 +26,7 @@
 {% endif %}
 
 <form action="{{ action|default("/new") }}" method="post" class="article">
-	<input type="text" name="title" placeholder="title" spellcheck="true" value="{{ story['title'] }}" />
+	<input type="text" name="title" placeholder="title" spellcheck="true" value="{{ story['title']|default('') }}" />
 	<textarea name="content" spellcheck="true" rows="10">{{ story['content'] }}</textarea>
 	{% if not story['locked'] %}
 		<input type="submit" value="Save" />

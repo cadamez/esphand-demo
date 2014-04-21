@@ -20,7 +20,8 @@ def upcoming():
 
 @app.route("/new")
 def new_article():
-    return render_template('new_article.html', role=escape(session['username']))
+    # Clunky...
+    return render_template('new_article.html', role=escape(session['username']), story_is_locked=False, story={'title': "", 'content': ''})
 @app.route("/new", methods=['POST'])
 def create_article():
     print(request.form)
@@ -32,7 +33,8 @@ def create_article():
 def edit_article(storyid):
     form_action = "/story/%s/edit" % storyid
     if request.method == 'GET':
-        return render_template("new_article.html", story=session['writer_stories'][int(storyid)], role=escape(session['username']), action=form_action)
+        story = session['writer_stories'][int(storyid)]
+        return render_template("new_article.html", story=story, role=escape(session['username']), action=form_action, story_is_locked=story['locked'] )
     else:
         print(request.form)
         return redirect(url_for('dashboard'))
