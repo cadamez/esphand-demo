@@ -1,43 +1,51 @@
 {% extends 'base.html' %}
 {% block content %}
-<div class="container">
-	<div class="eight columns">
-		<h2>Upcoming stories</h2>
-		<ul class="upcoming-stories">
-			{% for story in upcoming_stories %}
-			<li class="row {{ 'edited' if story['revision_ids']|length }}">
-				<a href="/story/{{ loop.index - 1 }}/edit" class="six columns alpha">
-					{% if story['locked'] == True %}<i class="batch" data-icon="&#xF0C2;"></i>{% endif %}
-					{{ story['title'] }}
-				</a>
-				<a href="#" class="one column">Preview</a>
-				<button type="button" class="one column omega" title="Copy preview link to clipboard"><i class="batch" data-icon="&#xF143;"></i></button>
-			</li>
-			{% endfor %}
-		</ul>
-		<a href="/upcoming-stories">Actually you have (12) more...</a>
+<div class="ink-grid">
+	<div class="column-group gutters">
+		<div class="all-50 small-100 tiny-100">
+			<h2>Upcoming stories</h2>
+			<ul class="upcoming-stories unstyled">
+				{% for story in upcoming_stories %}
+				<li class="{{ 'edited' if story['revision_ids']|length }}">
+					<a href="/story/{{ loop.index - 1 }}/edit">
+						{% if story['locked'] == True %}
+						<i class="fa fa-lg fa-lock locked"></i>
+						{% endif %}
+						{{ story['title'] }}
+					</a>
+					<menu>
+					<a href="#" class="">Preview</a>
+					<a href="#" class="space">Metadata</a>
+					<a href="#" class="space">{{ story['comments'] }} Comments</a>
+					</menu>
+				</li>
+				{% endfor %}
+			</ul>
+			<a href="/upcoming-stories">Actually you have (12) more...</a>
+		</div>
+		<div class="all-50 small-100 tiny-100">
+			<h2>Published stories</h2>
+			<ul class="unstyled">
+				<li >
+						<a href="/edit" >Public-key 24 hour collaboration for engineer back-end e-commerce</a>
+				</li>
+				<li>
+						<a href="/edit">Persistent actuating concept on engage ubiquitous e-services</a>
+				</li>
+				<li>
+						<a href="/edit">Adaptive reciprocal model for redefine B2B metrics</a>
+				</li>
+				<li>
+						<a href="/edit">Universal stable knowledge user with disintermediate holistic functionalities</a>
+				</li>
+				<li>
+						<a href="/edit">Front-line multi-state hub for extend wireless technologies</a>
+				</li>
+			</ul>
+			<a href="/past-stories">Actually you have (147) more...</a>
+		</div>
 	</div>
-		<br class="clear" />
-		<h2>Published stories</h2>
-		<ul>
-			<li class="row">
-					<a href="/edit" class="six columns">Public-key 24 hour collaboration for engineer back-end e-commerce</a>
-			</li>
-			<li class="row">
-					<a href="/edit" class="six columns">Persistent actuating concept on engage ubiquitous e-services</a>
-			</li>
-			<li class="row">
-					<a href="/edit" class="six columns">Adaptive reciprocal model for redefine B2B metrics</a>
-			</li>
-			<li class="row">
-					<a href="/edit" class="six columns">Universal stable knowledge user with disintermediate holistic functionalities</a>
-			</li>
-			<li class="row">
-					<a href="/edit" class="six columns">Front-line multi-state hub for extend wireless technologies</a>
-			</li>
-		</ul>
-		<a href="/past-stories">Actually you have (147) more...</a>
-	</div>
+</div>
 
 
 {% endblock %}

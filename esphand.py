@@ -1,6 +1,6 @@
 from flask import Flask, render_template, request, session, redirect, url_for, escape, flash
 from datetime import date, timedelta
-import os
+import os, random
 
 app = Flask(__name__)
 
@@ -23,7 +23,7 @@ def upcoming():
 @app.route("/new")
 def new_article():
     # Clunky...
-    return render_template('new_article.html', role=escape(session['username']), story_is_locked=False, story={'title': "", 'content': ''})
+    return render_template('new_article.html', role=escape(session['username']), story_is_locked=False, story={'title': "", 'content': '', 'revision_ids': [], 'locked': False,'comments': random.randint(0, 20)})
 @app.route("/new", methods=['POST'])
 def create_article():
     session['writer_stories'].append({'title': request.form['title'], 'content': request.form['content'], 'locked': False})
@@ -48,7 +48,7 @@ def import_article():
 def process_import():
     # Pretend to process that Word document here...
     word_doc_body = "Pretend that this text came from the Word document that you uploaded!!"
-    return render_template('new_article.html', role=escape(session['username']), story_is_locked=False, story={'title': request.form['worddoc'], 'content': word_doc_body, 'locked': False})
+    return render_template('new_article.html', role=escape(session['username']), story_is_locked=False, story={'title': request.form['worddoc'], 'content': word_doc_body,'revision_ids': [], 'locked': False,'comments': random.randint(0, 20)})
 
 @app.route("/preview")
 def preview_article():
@@ -82,9 +82,9 @@ def logout():
 
 def example_stories():
     return [
-            {'title': "Multi-tiered high-level structure for deploy wireless systems", 'content': "This is some example content here", 'locked': True, 'revision_ids': [1,2,3]},
-            {'title': "Team-oriented reciprocal leverage on enhance B2C infrastructures", 'content': "This is an example of content here as well", 'locked': False, 'revision_ids': [1,2,3]},
-            {'title': "Crazy idea about cats in hats", 'content': "Call the cat lady!!", 'locked': False, 'revision_ids': []}
+            {'title': "Multi-tiered high-level structure for deploy wireless systems", 'content': "This is some example content here", 'locked': True, 'revision_ids': [1,2,3], 'comments': random.randint(0, 20)},
+            {'title': "Team-oriented reciprocal leverage on enhance B2C infrastructures", 'content': "This is an example of content here as well", 'locked': False, 'revision_ids': [1,2,3], 'comments': random.randint(0, 20)},
+            {'title': "Crazy idea about cats in hats", 'content': "Call the cat lady!!", 'locked': False, 'revision_ids': [], 'comments': 0}
     ]
 
 # set the secret key.  keep this really secret:

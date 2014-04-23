@@ -1,21 +1,19 @@
 {% extends 'base.html' %}
 {% block content %}
-<div class="container">
-	<div class="eight columns">
-		<h2>Stories assigned to you</h2>
-		<ul class="editable-stories">
+<div class="ink-grid">
+	<div class="column-group">
+		<div class="all-50 small-100 tiny-100">
+			<h2>Stories assigned to you</h2>
+			<ul class="editable-stories unstyled">
 			{% for story in upcoming_stories %}
-			<li class="row {{ 'unedited' if story['revision_ids']|length }}">
+				<li class="{{ 'unedited' if story['revision_ids']|length }}">
 				<div class="story_overview">
-					<a href="/story/{{ loop.index - 1 }}/edit" class="six columns alpha">
-						{% if story['locked'] == True %}<i class="batch" data-icon="&#xF0C2;"></i>{% endif %}
+					<a href="/story/{{ loop.index - 1 }}/edit">
+						{% if story['locked'] == True %}<i class="fa fa-lock fa-lg"></i>{% endif %}
 						{{ story['title'] }}
 					</a>
-					<a href="#" class="one column">Preview</a>
-					<button type="button" class="one column omega" title="Copy preview link to clipboard"><i class="batch" data-icon="&#xF143;"></i></button>
 				</div>
-		<br class="clear" />
-				<a href="#"><span class="disclosure-triangle">&#x25B6;</span> Edit titles</a>
+				<!-- a href="#"><span class="disclosure-triangle">&#x25B6;</span> Edit titles</a>
 				<div class="story_metadata">
 					<form>
 						<label for="story_hed">Hed</label>
@@ -31,13 +29,13 @@
 						<label for="story_social_dek">Social Dek</label>
 						<input type="text" name="story_social_dek" />
 					</form>
-				</div>
+				</div -->
 			</li>
 			{% endfor %}
-		</ul>
+			</ul>
 		<a href="/upcoming-stories">Actually you have (12) more...</a>
+		</div>
 	</div>
-		<br class="clear" />
 		<h2>Unassigned stories</h2>
 		<ul>
 			<li class="row">

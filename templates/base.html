@@ -18,19 +18,18 @@
 
 	<!-- CSS
   ================================================== -->
-  <link rel="stylesheet" href="{{ url_for('static', filename='stylesheets/base.css')}}">
-  <link rel="stylesheet" href="{{ url_for('static', filename='stylesheets/skeleton.css')}}">
-  <link rel="stylesheet" href="{{ url_for('static', filename='stylesheets/layout.css')}}">
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/ink.css')}}">
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/font-awesome.min.css')}}">
   <link rel="stylesheet" href="{{ url_for('static', filename='stylesheets/esphand.css')}}">
 	{% for css_path in css_includes %}
 	<link rel="stylesheet" href="{{ url_for('static', filename=css_path)}}">
 	{% endfor %}
 
 	<!--[if lt IE 9]>
-		<script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
+		<script src="{{ url_for('static', filename='js/html5shiv.js') }}"></script>
 	<![endif]-->
 
-        <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
+	<script src="{{ url_for('static', filename='js/ink-all.js') }}"></script>
 	{% for script_path in js_includes %}
 	<script src="{{ url_for('static', filename=script_path)}}"></script>
 	{% endfor %}
@@ -38,27 +37,22 @@
 </head>
 <body>
 {% macro writer_actions() %}
-				<li><a href="/new" class="button"><i class="batch large" data-icon="&#xF10B;"></i> New story</a></li>
-				<li><a href="/import" class="button"><i class="batch large" data-icon="&#xF13E;"></i> Import from Word</a></li>
+				<li><a href="/new" class="button"><i class="fa fa-file"></i> New story</a></li>
+				<li><a href="/import" class="button"><i class="fa fa-upload"></i> Import from Word</a></li>
 {% endmacro %}
 {% macro editor_actions() %}
 				<li>&nbsp;</li>
 {% endmacro %}
-	<nav id="dashboard_nav">
-		<div class="container">
-			<ul class="twelve columns">
-			{% if username == 'writer' %}
-			{{ writer_actions() }} 
-			{% endif %}
-			{% if username == 'editor' %}
-			{{ editor_actions() }} 
-			{% endif %}
-			</ul>
-			<p class="four columns">Logged in as <em>{{ username }}</em>.
-				<br /> 
-				<a href="/logout" ><i class="batch" data-icon="&#xF069;"></i>Log out</a></li>
-			</p>
-		</div>
+	<nav class="ink-navigation" id="Xdashboard_nav">
+		<ul class="menu horizontal black">
+		{% if username == 'writer' %}
+		{{ writer_actions() }} 
+		{% endif %}
+		{% if username == 'editor' %}
+		{{ editor_actions() }} 
+		{% endif %}
+		<li ><a href="/logout" >Logged in as <em>{{ username }}</em>. <i class="fa fa-power-off"></i> Log out</a></li>
+		</ul>
 	</nav>
 
 	{% with messages = get_flashed_messages() %}
