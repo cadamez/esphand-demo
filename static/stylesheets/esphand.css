@@ -38,7 +38,7 @@ i.locked {
     margin-left: -1em;
 }
 /* # Edit a story
-================================================== */
+==================================================
 .timeline .revision {
     float:left;
 }
@@ -54,7 +54,7 @@ form.article * {
 }
 form.article input[type="text"], form.article textarea {
 	width: 90%;
-}
+} */
 
 /* # Section queue arrangement 
 ================================================== */

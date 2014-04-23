@@ -1,13 +1,13 @@
 {% macro send_to_editor() %}
-		<fieldset>
-			<select id="" name="editor_id">
-				<option value="">(Select an editor)</option>
-				<option value="1">Juana Molina</option>
-				<option value="2">Scott Kim</option>
-				<option value="3">Grace Jones</option>
-			</select>
-			<input type="submit" value="Send to editor" />
-		</fieldset>
+<fieldset class="all-33">
+	<select id="" name="editor_id">
+		<option value="">(Select an editor)</option>
+		<option value="1">Juana Molina</option>
+		<option value="2">Scott Kim</option>
+		<option value="3">Grace Jones</option>
+	</select>
+	<input type="submit" value="Send to editor" />
+</fieldset>
 {% endmacro %}
 
 {% extends 'base.html' %}
@@ -25,23 +25,27 @@
 </menu> #}
 {% endif %}
 
-<form action="{{ action|default("/new") }}" method="post" class="article">
-	<input type="text" name="title" placeholder="title" spellcheck="true" value="{{ story['title'] }}" />
-	<textarea name="content" spellcheck="true" rows="10">{{ story['content'] }}</textarea>
+<form action="{{ action|default("/new") }}" method="post" class="ink-form column-group gutters article">
+		<input type="text" name="title" placeholder="title" spellcheck="true" value="{{ story['title'] }}" class="all-100" />
+		<textarea name="content" spellcheck="true" rows="10" class="all-100">{{ story['content'] }}</textarea>
 	{% if not story['locked'] %}
-		<input type="submit" value="Save" />
+	<div class="column-group">
+		<div class="all-33">
+			<input type="submit" value="Save" />
+		</div>
 
-		{% if role == 'writer' and story['revision_ids']|length %}
-		{{ send_to_editor() }} 
-		{% endif %}
+			{% if role == 'writer' and story['revision_ids']|length %}
+			{{ send_to_editor() }} 
+			{% endif %}
 
-		{% if story['revision_ids']|length %}
-		<fieldset name="publishing_data">
-			<label>Publish date:</label>
-			<input id="publish_datetime" name="publish_datetime" type="datetime-local">
-			<input type="submit" value="Set" />
-		</fieldset>
-		{% endif %}
+			{% if story['revision_ids']|length %}
+			<fieldset name="publishing_data" class="all-33">
+				<label>Publish date:</label>
+				<input id="publish_datetime" name="publish_datetime" type="datetime-local">
+				<input type="submit" value="Set" />
+			</fieldset>
+			{% endif %}
+	</div>
 	{% endif %}
 </form>
 
