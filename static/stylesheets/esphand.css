@@ -38,7 +38,7 @@
 #dashboard_nav p,  #dashboard_nav p a{ color: white; }
 
 .upcoming-stories .edited { background-color: #A5FFFF; }
-.editable-stories .unedited { background-color: #FFEFA4; }
+.editable-stories .unedited { border-left: 3px solid #6CE0E2; }
 
 .upcoming-stories li{
 	/*padding: 1em 0;*/

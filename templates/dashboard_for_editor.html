@@ -1,23 +1,37 @@
 {% extends 'base.html' %}
 {% block content %}
 <div class="container">
-	<nav id="dashboard_nav">
-		<p>Logged in as <em>{{ username }}</em></p>
-		<ul>
-			<li><a href="/logout"><i class="batch large" data-icon="&#xF069;"></i>Log out</a></li>
-		</ul>
-	</nav>
 	<div class="eight columns">
 		<h2>Stories assigned to you</h2>
 		<ul class="editable-stories">
 			{% for story in upcoming_stories %}
 			<li class="row {{ 'unedited' if story['revision_ids']|length }}">
-				<a href="/story/{{ loop.index - 1 }}/edit" class="six columns alpha">
-					{% if story['locked'] == True %}<i class="batch" data-icon="&#xF0C2;"></i>{% endif %}
-					{{ story['title'] }}
-				</a>
-				<a href="#" class="one column">Preview</a>
-				<button type="button" class="one column omega" title="Copy preview link to clipboard"><i class="batch" data-icon="&#xF143;"></i></button>
+				<div class="story_overview">
+					<a href="/story/{{ loop.index - 1 }}/edit" class="six columns alpha">
+						{% if story['locked'] == True %}<i class="batch" data-icon="&#xF0C2;"></i>{% endif %}
+						{{ story['title'] }}
+					</a>
+					<a href="#" class="one column">Preview</a>
+					<button type="button" class="one column omega" title="Copy preview link to clipboard"><i class="batch" data-icon="&#xF143;"></i></button>
+				</div>
+		<br class="clear" />
+				<a href="#"><span class="disclosure-triangle">&#x25B6;</span> Edit titles</a>
+				<div class="story_metadata">
+					<form>
+						<label for="story_hed">Hed</label>
+						<input type="text" name="story_hed" />
+						<label for="story_dek">Dek</label>
+						<input type="text" name="story_dek" />
+						<label for="story_hed">Alt. Hed</label>
+						<input type="text" name="story_alt_hed" />
+						<label for="story_hed">Alt. Dek</label>
+						<input type="text" name="story_alt_hed" />
+						<label for="story_hed">Social Hed</label>
+						<input type="text" name="story_social_hed" />
+						<label for="story_social_dek">Social Dek</label>
+						<input type="text" name="story_social_dek" />
+					</form>
+				</div>
 			</li>
 			{% endfor %}
 		</ul>

@@ -37,11 +37,22 @@
 
 </head>
 <body>
+{% macro writer_actions() %}
+				<li><a href="/new" class="button"><i class="batch large" data-icon="&#xF10B;"></i> New story</a></li>
+				<li><a href="/import" class="button"><i class="batch large" data-icon="&#xF13E;"></i> Import from Word</a></li>
+{% endmacro %}
+{% macro editor_actions() %}
+				<li>&nbsp;</li>
+{% endmacro %}
 	<nav id="dashboard_nav">
 		<div class="container">
 			<ul class="twelve columns">
-				<li><a href="/new" class="button"><i class="batch large" data-icon="&#xF10B;"></i> New story</a></li>
-				<li><a href="/import" class="button"><i class="batch large" data-icon="&#xF13E;"></i> Import from Word</a></li>
+			{% if username == 'writer' %}
+			{{ writer_actions() }} 
+			{% endif %}
+			{% if username == 'editor' %}
+			{{ editor_actions() }} 
+			{% endif %}
 			</ul>
 			<p class="four columns">Logged in as <em>{{ username }}</em>.
 				<br /> 
