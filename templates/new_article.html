@@ -26,7 +26,7 @@
 {% endif %}
 <div class="ink-grid">
 	<div class="column-group">
-		<form action="{{ action|default("/new") }}" method="post" class="all-75 ink-form article">
+		<form action="{{ action|default("/new") }}" method="post" class="{{ 'all-75' if show_comments else 'all-100' }} ink-form article">
 				<input type="text" name="title" placeholder="title" spellcheck="true" value="{{ story['title'] }}" class="all-100" />
 				<textarea name="content" spellcheck="true" rows="10" class="all-100">{{ story['content'] }}</textarea>
 			{% if not story['locked'] %}
@@ -57,13 +57,15 @@
 			</div>
 			{% endif %}
 		</form>
-		<aside class="all-25 comments">	
+		{% if show_comments %}
+		<aside class="all-25 comments">
 			{# No idea what this would be, semantically speaking. #}
 			<div class="comment">Some comment about how the story blah blah</div>
 			<div class="comment">Some comment about how the story blah blah</div>
 			<div class="comment">Some comment about how the story blah blah</div>
 			<div class="comment">Some comment about how the story blah blah</div>
 		</aside>
+		{% endif %}
 	</div>
 </div>
 {% endblock %}

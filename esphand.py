@@ -4,6 +4,14 @@ import os, random
 
 app = Flask(__name__)
 
+class DummyArticle(object):
+    def __init__(self, **kwargs):
+        self.title = kwargs[title] or ''
+        self.content = kwargs[content] or ''
+        self.revision_ids = kwargs[revision_ids] or []
+        self.locked = kwargs[locked] or False
+        self.comments = kwargs [comments] or 0
+
 @app.route("/")
 def dashboard():
     if 'username' in session:
@@ -22,11 +30,10 @@ def upcoming():
 
 @app.route("/new")
 def new_article():
-    # Clunky...
-    return render_template('new_article.html', role=escape(session['username']), story_is_locked=False, story={'title': "", 'content': '', 'revision_ids': [], 'locked': False,'comments': random.randint(0, 20)})
+    return render_template('new_article.html', role=escape(session['username']), story_is_locked=False, story=DummyArticle(), show_comments=False )
 @app.route("/new", methods=['POST'])
 def create_article():
-    session['writer_stories'].append({'title': request.form['title'], 'content': request.form['content'], 'locked': False})
+    session['writer_stories'].append(DummyArticle(title=request.form['title'], content=request.form['content']))
     flash("Created article \"%s\"" % request.form['title'])
     return redirect(url_for('dashboard'))
 
@@ -37,7 +44,7 @@ def edit_article(storyid):
         story = session['writer_stories'][int(storyid)]
         username = escape(session['username'])
         todays_date = (date.today() + timedelta(days=1)).strftime("%Y-%m-%d")
-        return render_template("new_article.html", story=story, username=username, role=username, action=form_action, story_is_locked=story['locked'], todays_date=todays_date )
+        return render_template("new_article.html", story=story, username=username, role=username, action=form_action, story_is_locked=story.locked, todays_date=todays_date, show_comments=(story.comments > 0) )
     else:
         print(request.form)
         return redirect(url_for('dashboard'))
@@ -49,18 +56,15 @@ def import_article():
 def process_import():
     # Pretend to process that Word document here...
     word_doc_body = "Pretend that this text came from the Word document that you uploaded!!"
-    return render_template('new_article.html', role=escape(session['username']), story_is_locked=False, story={'title': request.form['worddoc'], 'content': word_doc_body,'revision_ids': [], 'locked': False,'comments': random.randint(0, 20)})
+    return render_template('new_article.html', role=escape(session['username']), story_is_locked=False, story=DummyArticle(title=request.form['worddoc'], content=word_doc_body))
 
-@app.route("/preview")
+@app.route("/story/<int:storyid>/preview")
 def preview_article():
     return render_template("preview.html")
 
 @app.route("/sections/<sectionname>/edit")
 def edit_section(sectionname):
     return render_template("arrange_section.html")
-
-#@app.route('/')
-#def index():
 
 @app.route('/login', methods=['GET', 'POST'])
 def login():
@@ -83,9 +87,9 @@ def logout():
 
 def example_stories():
     return [
-            {'title': "Multi-tiered high-level structure for deploy wireless systems", 'content': "This is some example content here", 'locked': True, 'revision_ids': [1,2,3], 'comments': random.randint(0, 20)},
-            {'title': "Team-oriented reciprocal leverage on enhance B2C infrastructures", 'content': "This is an example of content here as well", 'locked': False, 'revision_ids': [1,2,3], 'comments': random.randint(0, 20)},
-            {'title': "Crazy idea about cats in hats", 'content': "Call the cat lady!!", 'locked': False, 'revision_ids': [], 'comments': 0}
+            DummyArticle(title="Multi-tiered high-level structure for deploy wireless systems", content="This is some example content here", locked=True, revision_ids=[1,2,3], comments=random.randint(0, 20)),
+            DummyArticle(title="Team-oriented reciprocal leverage on enhance B2C infrastructures", content="This is an example of content here as well", revision_ids=[1,2,3], comments=random.randint(0, 20)),
+            DummyArticle(title="Crazy idea about cats in hats", content="Call the cat lady!!")
     ]
 
 # set the secret key.  keep this really secret:
