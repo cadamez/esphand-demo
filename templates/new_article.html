@@ -1,5 +1,5 @@
 {% macro send_to_editor() %}
-<fieldset class="all-33">
+<fieldset class="all-40">
 	<select id="" name="editor_id">
 		<option value="">(Select an editor)</option>
 		<option value="1">Juana Molina</option>
@@ -13,7 +13,7 @@
 {% extends 'base.html' %}
 {% block content %}
 {% if story_is_locked %}
-<p class="warning"><a href='#'>Mary Sue</a> is editing this article right now.</p>
+<p class="ink-alert basic"><a href='#'>Mary Sue</a> is editing this article right now.</p>
 {% endif %}
 
 {% if not story_is_locked %}
@@ -24,29 +24,46 @@
 	<button type="button"><i class="batch" data-icon="&#xF17C;"></i>View history</button>
 </menu> #}
 {% endif %}
-
-<form action="{{ action|default("/new") }}" method="post" class="ink-form column-group gutters article">
-		<input type="text" name="title" placeholder="title" spellcheck="true" value="{{ story['title'] }}" class="all-100" />
-		<textarea name="content" spellcheck="true" rows="10" class="all-100">{{ story['content'] }}</textarea>
-	{% if not story['locked'] %}
+<div class="ink-grid">
 	<div class="column-group">
-		<div class="all-33">
-			<input type="submit" value="Save" />
-		</div>
+		<form action="{{ action|default("/new") }}" method="post" class="all-75 ink-form article">
+				<input type="text" name="title" placeholder="title" spellcheck="true" value="{{ story['title'] }}" class="all-100" />
+				<textarea name="content" spellcheck="true" rows="10" class="all-100">{{ story['content'] }}</textarea>
+			{% if not story['locked'] %}
+			<div class="column-group">
+				{% if role == 'writer' and story['revision_ids']|length %}
+				{{ send_to_editor() }} 
+				{% endif %}
+				{% if story['revision_ids']|length %}
+				<fieldset name="publishing_data" class="all-50 column-group">
+					<div class="control-group all-50">
+						<label>Publish date:</label>
+						<div class="control">
+							<input id="publish_date" name="publish_date" class="ink-datepicker" data-initial-date="{{ todays_date }}" data-date-range="NOW:2015-05" data-position="right">
+						</div>
+					</div>
+					<div class="control-group all-50">
+						<label>Time:</label>
+						<div class="control">
+							<input id="publish_time" name="publish_time" value="03:00 PST" /> 
+						</div>
+					</div>
+				</fieldset>
+				{% endif %}
 
-			{% if role == 'writer' and story['revision_ids']|length %}
-			{{ send_to_editor() }} 
+				<div class="all-10">
+					<input type="submit" value="Save" class="push-right"/>
+				</div>
+			</div>
 			{% endif %}
-
-			{% if story['revision_ids']|length %}
-			<fieldset name="publishing_data" class="all-33">
-				<label>Publish date:</label>
-				<input id="publish_datetime" name="publish_datetime" type="datetime-local">
-				<input type="submit" value="Set" />
-			</fieldset>
-			{% endif %}
+		</form>
+		<aside class="all-25 comments">	
+			{# No idea what this would be, semantically speaking. #}
+			<div class="comment">Some comment about how the story blah blah</div>
+			<div class="comment">Some comment about how the story blah blah</div>
+			<div class="comment">Some comment about how the story blah blah</div>
+			<div class="comment">Some comment about how the story blah blah</div>
+		</aside>
 	</div>
-	{% endif %}
-</form>
-
+</div>
 {% endblock %}

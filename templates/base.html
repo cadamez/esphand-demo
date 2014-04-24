@@ -30,6 +30,7 @@
 	<![endif]-->
 
 	<script src="{{ url_for('static', filename='js/ink-all.js') }}"></script>
+	<script src="{{ url_for('static', filename='js/autoload.js') }}"></script>
 	{% for script_path in js_includes %}
 	<script src="{{ url_for('static', filename=script_path)}}"></script>
 	{% endfor %}

@@ -38,24 +38,24 @@ i.locked {
     margin-left: -1em;
 }
 /* # Edit a story
-==================================================
-.timeline .revision {
-    float:left;
+================================================== */
+form.article input[name="title"], form.article textarea[name="content"] {
+	font-size: 1.5em;
+	color: black;
 }
-.warning {
-    background-color: #FFF059;
-    padding: 1em 9em;
+aside.comments {
+	margin-top: 3em;
 }
-form.article { 
-	margin-left: 5%;
+.comment {
+background-color: yellow;
+padding: 10px;
+border: 1px solid #cc0;
+margin-bottom: 10px;
 }
-form.article * { 
-	font-size: 2rem;
+form.article .ink-datepicker-calendar.bottom {
+    top: -750%;
+    left: 0;
 }
-form.article input[type="text"], form.article textarea {
-	width: 90%;
-} */
-
 /* # Section queue arrangement 
 ================================================== */
 

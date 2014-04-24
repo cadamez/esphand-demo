@@ -7,7 +7,7 @@ app = Flask(__name__)
 @app.route("/")
 def dashboard():
     if 'username' in session:
-        if not 'writer_stories' in session:
+        if 'writer_stories' not in session:
             session['writer_stories'] = example_stories() 
         username=escape(session['username'])
         template_name = "dashboard_for_%s.html" % username
@@ -36,7 +36,8 @@ def edit_article(storyid):
     if request.method == 'GET':
         story = session['writer_stories'][int(storyid)]
         username = escape(session['username'])
-        return render_template("new_article.html", story=story, username=username, role=username, action=form_action, story_is_locked=story['locked'] )
+        todays_date = (date.today() + timedelta(days=1)).strftime("%Y-%m-%d")
+        return render_template("new_article.html", story=story, username=username, role=username, action=form_action, story_is_locked=story['locked'], todays_date=todays_date )
     else:
         print(request.form)
         return redirect(url_for('dashboard'))
@@ -88,7 +89,7 @@ def example_stories():
     ]
 
 # set the secret key.  keep this really secret:
-app.secret_key = os.urandom(32)
+app.secret_key = 'This is supposed to be a secret you guise'
 
 if __name__ == "__main__":
     app.run(debug=bool(os.getenv('FLASK_DEBUG', False)))
