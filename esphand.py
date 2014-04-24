@@ -6,11 +6,11 @@ app = Flask(__name__)
 
 class DummyArticle(object):
     def __init__(self, **kwargs):
-        self.title = kwargs[title] or ''
-        self.content = kwargs[content] or ''
-        self.revision_ids = kwargs[revision_ids] or []
-        self.locked = kwargs[locked] or False
-        self.comments = kwargs [comments] or 0
+        self.title = kwargs['title'] or ''
+        self.content = kwargs['content'] or ''
+        self.revision_ids = kwargs['revision_ids'] if 'revision_ids' in kwargs else []
+        self.locked = kwargs['locked'] if 'locked' in kwargs else False
+        self.comments = kwargs['comments'] if 'comments' in kwargs else 0
 
 @app.route("/")
 def dashboard():
@@ -20,7 +20,9 @@ def dashboard():
         username=escape(session['username'])
         template_name = "dashboard_for_%s.html" % username
         print(session['writer_stories'])
-        return render_template(template_name, username=username, upcoming_stories=session['writer_stories']) 
+        return render_template(template_name,
+                                username=username,
+                                upcoming_stories=session['writer_stories']) 
     else:
         return redirect(url_for('login'))
 
@@ -30,7 +32,11 @@ def upcoming():
 
 @app.route("/new")
 def new_article():
-    return render_template('new_article.html', role=escape(session['username']), story_is_locked=False, story=DummyArticle(), show_comments=False )
+    return render_template('new_article.html',
+                            role=escape(session['username']),
+                            story_is_locked=False,
+                            story=DummyArticle(),
+                            show_comments=False )
 @app.route("/new", methods=['POST'])
 def create_article():
     session['writer_stories'].append(DummyArticle(title=request.form['title'], content=request.form['content']))
@@ -93,7 +99,7 @@ def example_stories():
     ]
 
 # set the secret key.  keep this really secret:
-app.secret_key = 'This is supposed to be a secret you guise'
+app.secret_key = os.getenv('FLASK_SEKRET_KEY')
 
 if __name__ == "__main__":
     app.run(debug=bool(os.getenv('FLASK_DEBUG', False)))
