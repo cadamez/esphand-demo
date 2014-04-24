@@ -1,16 +1,18 @@
 from flask import Flask, render_template, request, session, redirect, url_for, escape, flash
 from datetime import date, timedelta
-import os, random
+import os, random, json
 
 app = Flask(__name__)
 
-class DummyArticle(object):
+class DummyArticle():
     def __init__(self, **kwargs):
-        self.title = kwargs['title'] or ''
-        self.content = kwargs['content'] or ''
+        self.title = kwargs['title']
+        self.content = kwargs['content']
         self.revision_ids = kwargs['revision_ids'] if 'revision_ids' in kwargs else []
         self.locked = kwargs['locked'] if 'locked' in kwargs else False
         self.comments = kwargs['comments'] if 'comments' in kwargs else 0
+    def default(o):
+        return o.__dict__
 
 @app.route("/")
 def dashboard():
@@ -47,10 +49,11 @@ def create_article():
 def edit_article(storyid):
     form_action = "/story/%s/edit" % storyid
     if request.method == 'GET':
-        story = session['writer_stories'][int(storyid)]
+        # well I guess an object was not such a good idea... :[
+        story = json.loads(session['writer_stories'][int(storyid)])
         username = escape(session['username'])
         todays_date = (date.today() + timedelta(days=1)).strftime("%Y-%m-%d")
-        return render_template("new_article.html", story=story, username=username, role=username, action=form_action, story_is_locked=story.locked, todays_date=todays_date, show_comments=(story.comments > 0) )
+        return render_template("new_article.html", story=story, username=username, role=username, action=form_action, story_is_locked=story['locked'], todays_date=todays_date, show_comments=(story['comments'] > 0) )
     else:
         print(request.form)
         return redirect(url_for('dashboard'))
@@ -93,9 +96,9 @@ def logout():
 
 def example_stories():
     return [
-            DummyArticle(title="Multi-tiered high-level structure for deploy wireless systems", content="This is some example content here", locked=True, revision_ids=[1,2,3], comments=random.randint(0, 20)),
-            DummyArticle(title="Team-oriented reciprocal leverage on enhance B2C infrastructures", content="This is an example of content here as well", revision_ids=[1,2,3], comments=random.randint(0, 20)),
-            DummyArticle(title="Crazy idea about cats in hats", content="Call the cat lady!!")
+            json.dumps(DummyArticle(title="Multi-tiered high-level structure for deploy wireless systems", content="This is some example content here", locked=True, revision_ids=[1,2,3], comments=random.randint(0, 20))),
+            json.dumps(DummyArticle(title="Team-oriented reciprocal leverage on enhance B2C infrastructures", content="This is an example of content here as well", revision_ids=[1,2,3], comments=random.randint(0, 20))),
+            json.dumps(DummyArticle(title="Crazy idea about cats in hats", content="Call the cat lady!!"))
     ]
 
 # set the secret key.  keep this really secret:
