@@ -1,4 +1,7 @@
 {% extends 'base.html' %}
+{% block menu %}
+				<li><a href="/"><i class="fa fa-arrow-left"></i> Back to dashboard</a></li>
+{% endblock %}
 {% block content %}
 <form action="/import" method="post" >
 	<label>Word document to upload:</label>

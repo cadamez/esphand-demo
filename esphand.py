@@ -35,7 +35,7 @@ def new_article():
     return render_template('new_article.html',
                             role=escape(session['username']),
                             story_is_locked=False,
-                            story=DummyArticle(),
+                            story={'title':'','content':''},
                             show_comments=False )
 @app.route("/new", methods=['POST'])
 def create_article():
@@ -70,8 +70,8 @@ def process_import():
     return render_template('new_article.html',
                             role=escape(session['username']),
                             story_is_locked=False,
-                            story=DummyArticle(title=request.form['worddoc'],
-                                    content=word_doc_body))
+                            story={'title':request.form['worddoc'],
+                                'content':word_doc_body})
 
 @app.route("/story/<int:storyid>/preview")
 def preview_article():

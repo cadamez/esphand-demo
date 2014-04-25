@@ -59,7 +59,7 @@
 				{% endif %}
 
 				<div class="all-10">
-					<input type="submit" value="Save" class="push-right"/>
+					<input type="submit" value="Save" {{ 'class="push-right"' if story['revision_ids']|length }} />
 				</div>
 			</div>
 			{% endif %}
