@@ -37,22 +37,10 @@
 
 </head>
 <body>
-{% macro writer_actions() %}
-				<li><a href="/new" class="button"><i class="fa fa-file"></i> New story</a></li>
-				<li><a href="/import" class="button"><i class="fa fa-upload"></i> Import from Word</a></li>
-{% endmacro %}
-{% macro editor_actions() %}
-				<li>&nbsp;</li>
-{% endmacro %}
-	<nav class="ink-navigation" id="Xdashboard_nav">
+	<nav class="ink-navigation">
 		<ul class="menu horizontal black">
-		{% if username == 'writer' %}
-		{{ writer_actions() }} 
-		{% endif %}
-		{% if username == 'editor' %}
-		{{ editor_actions() }} 
-		{% endif %}
-		<li ><a href="/logout" >Logged in as <em>{{ username }}</em>. <i class="fa fa-power-off"></i> Log out</a></li>
+			{% block menu %}{% endblock %} 
+			<li ><a href="/logout" >Logged in as <em>{{ username }}</em>. <i class="fa fa-power-off"></i> Log out</a></li>
 		</ul>
 	</nav>
 

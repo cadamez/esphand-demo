@@ -24,7 +24,7 @@ def dashboard():
         print(session['writer_stories'])
         return render_template(template_name,
                                 username=username,
-                                upcoming_stories=session['writer_stories']) 
+                                upcoming_stories=map(json.loads, session['writer_stories'])) 
     else:
         return redirect(url_for('login'))
 

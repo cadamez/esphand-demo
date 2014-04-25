@@ -11,18 +11,25 @@
 {% endmacro %}
 
 {% extends 'base.html' %}
-{% block content %}
-{% if story_is_locked %}
-<p class="ink-alert basic"><a href='#'>Mary Sue</a> is editing this article right now.</p>
-{% endif %}
 
-{% if not story_is_locked %}
+
 {# Not sure what goes in the menu yet...
+{% if not story_is_locked %}
 <menu id="add_story_elements" type="toolbar">
 	<button type="button"><i class="batch" data-icon="&#xF040;"></i>Add picture</button>
 	<button type="button"><i class="batch" data-icon="&#xF03A;"></i>Add sound</button>
 	<button type="button"><i class="batch" data-icon="&#xF17C;"></i>View history</button>
-</menu> #}
+</menu>
+{% endif %}
+#}
+
+{% block menu %}
+				<li><a href="/"><i class="fa fa-arrow-left"></i> Back to dashboard</a></li>
+{% endblock %}
+
+{% block content %}
+{% if story_is_locked %}
+<p class="ink-alert basic"><a href='#'>Mary Sue</a> is editing this article right now.</p>
 {% endif %}
 <div class="ink-grid">
 	<div class="column-group">
