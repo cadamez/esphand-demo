@@ -74,8 +74,9 @@ def process_import():
                                 'content':word_doc_body})
 
 @app.route("/story/<int:storyid>/preview")
-def preview_article():
-    return render_template("preview.html")
+def preview_article(storyid):
+    story = json.loads(session['writer_stories'][int(storyid)])
+    return render_template("preview.html", story=story)
 
 @app.route("/sections/<sectionname>/edit")
 def edit_section(sectionname):

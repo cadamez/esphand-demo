@@ -1,16 +1,65 @@
 {% extends 'base.html' %}
+{# Not sure what goes in the menu yet...
+{% if not story_is_locked %}
+<menu id="add_story_elements" type="toolbar">
+	<button type="button"><i class="batch" data-icon="&#xF040;"></i>Add picture</button>
+	<button type="button"><i class="batch" data-icon="&#xF03A;"></i>Add sound</button>
+	<button type="button"><i class="batch" data-icon="&#xF17C;"></i>View history</button>
+</menu>
+{% endif %}
+#}
+
+{% block menu %}
+				<li><a href="/"><i class="fa fa-arrow-left"></i> Back to dashboard</a></li>
+				<li><a href="#"><i class="fa fa-cloud-upload"></i> Publish</a></li>
+{% endblock %}
+
 {% block content %}
-<div class="container">
-	{% if ready_to_publish %}
-	<div class="row">
+{% if story_is_locked %}
+<p class="ink-alert basic"><a href='#'>Mary Sue</a> is editing this article right now.</p>
+{% endif %}
+
+<form action="{{ action|default("/new") }}" method="post" class="ink-form article">
+	<h1>Story preview</h1>
+	<div id="headline_variants" class="ink-tabs top">
+		<ul class="tabs-nav">
+			<li><a href="#page">Page</a></li>
+			<li><a href="#alt">Headlines for lists</a></li>
+			<li><a href="#social">Headlines in social media</a></li>
+		</ul>
+
+		<div id="page" class="tabs-content">
+			<div class="story-preview">
+				<article>
+					<header>
+						<h1>{{ story['title'] }}</h1>
+						<h2></h2>
+					</header>
+					<section>{{ story['content'] }}</section>
+				</article>
+			</div>
+		</div>
+		<div id="alt" class="tabs-content">
+			<div class="slider-preview">
+				GIANT SLIDER BOX
+			</div>
+			<div class="list-preview">
+				<section class="article-list">
+					<h3>CATEGORY NAME</h3>
+					<ul>
+						<li>{{ story['title'] }}</li>
+					</ul>
+				</section>
+			</div>
+		</div>
+		<div id="social" class="tabs-content">
+			<div class="facebook-preview">
+				A FACEBOOK...CARD?
+			</div>
+			<div class="twitter-preview">
+				A TWITTER CARD
+			</div>
+		</div>
 	</div>
-	{% else %}
-	{% endif %}
-	<form action="/new" method="post">
-		<input type="text" name="title" placeholder="title" class="sixteen columns editStory title" />
-		<input type="text" name="dek" placeholder="A nice long dek" class="sixteen columns editStory dek" />
-		<textarea name="content" spellcheck="true" rows="20" class="sixteen columns"></textarea>
-		<input type="submit" />
-	</form>
-</div>
+</form>
 {% endblock %}
