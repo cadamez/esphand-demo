@@ -52,7 +52,8 @@ def edit_article(storyid):
         story = json.loads(session['writer_stories'][int(storyid)])
         username = escape(session['username'])
         todays_date = (date.today() + timedelta(days=1)).strftime("%Y-%m-%d")
-        return render_template("new_article.html", story=story, username=username,
+        return render_template("new_article.html", story=story, storyid=storyid,
+                                username=username,
                                 role=username, action=form_action,
                                 story_is_locked=story['locked'], todays_date=todays_date,
                                 show_comments=(story['comments'] > 0) )
@@ -76,7 +77,7 @@ def process_import():
 @app.route("/story/<int:storyid>/preview")
 def preview_article(storyid):
     story = json.loads(session['writer_stories'][int(storyid)])
-    return render_template("preview.html", story=story)
+    return render_template("preview.html", story=story, storyid=storyid)
 
 @app.route("/sections/<sectionname>/edit")
 def edit_section(sectionname):

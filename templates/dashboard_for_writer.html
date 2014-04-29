@@ -15,9 +15,9 @@
 						{% if story['locked'] == True %}
 						<i class="fa fa-lg fa-lock locked"></i>
 						{% endif %}
-						{{ story['title'] }}
+						{{ story['title']|default("no title") }}
 					</a>
-					<span class="ink-label {{ label_color.next() }}">{{ story['comments'] }} <i class="fa fa-comment"></i></span>
+					<span class="ink-label {{ label_color.next() }}">{{ story['comments']|default(0) }} <i class="fa fa-comment"></i></span>
 				</li>
 				{% endfor %}
 			</ul>

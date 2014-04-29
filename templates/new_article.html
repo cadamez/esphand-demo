@@ -1,5 +1,5 @@
 {% macro send_to_editor() %}
-<fieldset class="all-40">
+<fieldset class="all-50">
 	<select id="" name="editor_id">
 		<option value="">(Select an editor)</option>
 		<option value="1">Juana Molina</option>
@@ -12,21 +12,10 @@
 
 {% extends 'base.html' %}
 
-
-{# Not sure what goes in the menu yet...
-{% if not story_is_locked %}
-<menu id="add_story_elements" type="toolbar">
-	<button type="button"><i class="batch" data-icon="&#xF040;"></i>Add picture</button>
-	<button type="button"><i class="batch" data-icon="&#xF03A;"></i>Add sound</button>
-	<button type="button"><i class="batch" data-icon="&#xF17C;"></i>View history</button>
-</menu>
-{% endif %}
-#}
-
 {% block navigation %}
 				<li><a href="/"><i class="fa fa-arrow-left"></i> Back to dashboard</a></li>
-				<li><a href="/story/{{ 0 }}/preview">Preview</a></li>
-				{% if story['revision_ids']|length %}<li><a href="/story/{{ 0 }}/publish">Publish</a></li>{% endif %}
+				<li><a href="/story/{{ storyid }}/preview"><i class="fa fa-eye"></i> Preview</a></li>
+				{% if username == 'editor' and story['revision_ids']|length %}<li><a href="/story/{{ 0 }}/publish"><i class="fa fa-cloud-upload"></i> Publish</a></li>{% endif %}
 {% endblock %}
 
 {% block content %}
@@ -35,7 +24,7 @@
 {% endif %}
 <div class="ink-grid" id="current_story">
 	<div class="column-group">
-		<form action="{{ action|default("/new") }}" method="post" class="{{ 'all-75' if show_comments else 'all-100' }} ink-form article">
+		<form action="{{ action|default("/new") }}" method="post" class="all-100 ink-form article">
 				<input type="text" name="title" placeholder="title" spellcheck="true" value="{{ story['title'] }}" class="all-100" />
 				<textarea name="content" spellcheck="true" rows="10" class="all-100">{{ story['content'] }}</textarea>
 			{% if not story['locked'] %}
@@ -43,22 +32,30 @@
 				{% if role == 'writer' and story['revision_ids']|length %}
 				{{ send_to_editor() }} 
 				{% endif %}
-				<div class="all-10">
+				<div class="all-50">
 					<input type="submit" value="Save" class="push-right" />
 				</div>
 			</div>
 			{% endif %}
 		</form>
+{#
 		{% if show_comments %}
-		{#
 		<aside class="all-25 comments">
 			<div class="comment">Some comment about how the story blah blah</div>
 			<div class="comment">Some comment about how the story blah blah</div>
 			<div class="comment">Some comment about how the story blah blah</div>
 			<div class="comment">Some comment about how the story blah blah</div>
-		</aside> #}
+		</aside> 
 		{% endif %}
 	</div>
+		{% for num in range(200, 350, 75) %}
+
+		<div class="comment-container" style='top:{{ num }}px;'>
+			<i class="fa fa-comment comment-marker"></i>
+			<div class="comment-text">This is a comment about the story that you're writing</div>
+		</div>
+		{% endfor %}
+#}
 </div>
 <script>
 
@@ -81,12 +78,18 @@ current_story.addEventListener('dblclick', function(evt) {
 {% endif %}
 function makeStickyNoteMarker(x_pos, y_pos) {
 	var marker = document.createElement("div");
-	marker.innerHTML = '<i class="fa fa-comment comment-marker"></i>'
+	marker.innerHTML = '<i class="fa fa-comment comment-marker"></i></a><div class="comment-text">This is a comment about the story that you\'re writing</div>'
 	marker.style.position = "absolute";
 	marker.style.left =  x_pos + "px";
 	marker.style.top = y_pos + "px";
+	marker.style.width = "100%"; // move to CSS
 	current_story.appendChild(marker);
 }
+$('.comment-text').hide();
+$(".comment-marker").click(function() {
+	console.log("fired");
+	$(this).siblings('.comment-text').show();
+});
 // Doesn't seem to work for some reason
 /*function stickynoteKeyHandlers(evt){
 	console.log("hi");

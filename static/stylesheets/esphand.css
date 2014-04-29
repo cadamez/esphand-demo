@@ -46,7 +46,12 @@ form.article input[name="title"], form.article textarea[name="content"] {
 aside.comments {
 	margin-top: 3em;
 }
-.comment {
+.comment-container {
+	position:absolute;
+	left:100px;
+	width: 50%;
+}
+.comment, .comment-text {
 	background-color: yellow;
 	padding: 10px;
 	border: 1px solid #cc0;
@@ -56,7 +61,10 @@ aside.comments {
 }
 .comment-marker {
     color: orange;
-    font-size: 1.5em;
+    font-size: 2em;
+}
+.comment-text {
+	display: inline-block;
 }
 form.article .ink-datepicker-calendar.bottom {
     top: -750%;
