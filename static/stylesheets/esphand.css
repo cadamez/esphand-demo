@@ -47,10 +47,16 @@ aside.comments {
 	margin-top: 3em;
 }
 .comment {
-background-color: yellow;
-padding: 10px;
-border: 1px solid #cc0;
-margin-bottom: 10px;
+	background-color: yellow;
+	padding: 10px;
+	border: 1px solid #cc0;
+	margin-bottom: 10px;
+	position: absolute;
+	min-height: 3em;
+}
+.comment-marker {
+    color: orange;
+    font-size: 1.5em;
 }
 form.article .ink-datepicker-calendar.bottom {
     top: -750%;

@@ -23,15 +23,17 @@
 {% endif %}
 #}
 
-{% block menu %}
+{% block navigation %}
 				<li><a href="/"><i class="fa fa-arrow-left"></i> Back to dashboard</a></li>
+				<li><a href="/story/{{ 0 }}/preview">Preview</a></li>
+				{% if story['revision_ids']|length %}<li><a href="/story/{{ 0 }}/publish">Publish</a></li>{% endif %}
 {% endblock %}
 
 {% block content %}
 {% if story_is_locked %}
 <p class="ink-alert basic"><a href='#'>Mary Sue</a> is editing this article right now.</p>
 {% endif %}
-<div class="ink-grid">
+<div class="ink-grid" id="current_story">
 	<div class="column-group">
 		<form action="{{ action|default("/new") }}" method="post" class="{{ 'all-75' if show_comments else 'all-100' }} ink-form article">
 				<input type="text" name="title" placeholder="title" spellcheck="true" value="{{ story['title'] }}" class="all-100" />
@@ -41,23 +43,6 @@
 				{% if role == 'writer' and story['revision_ids']|length %}
 				{{ send_to_editor() }} 
 				{% endif %}
-				{% if story['revision_ids']|length %}
-				<fieldset name="publishing_data" class="all-50 column-group">
-					<div class="control-group all-50">
-						<label>Publish date:</label>
-						<div class="control">
-							<input id="publish_date" name="publish_date" class="ink-datepicker" data-initial-date="{{ todays_date }}" data-date-range="NOW:2015-05" data-position="right">
-						</div>
-					</div>
-					<div class="control-group all-50">
-						<label>Time:</label>
-						<div class="control">
-							<input id="publish_time" name="publish_time" value="03:00 PST" /> 
-						</div>
-					</div>
-				</fieldset>
-				{% endif %}
-
 				<div class="all-10">
 					<input type="submit" value="Save" class="push-right" />
 				</div>
@@ -75,4 +60,52 @@
 		{% endif %}
 	</div>
 </div>
+<script>
+
+var current_story = document.getElementById("current_story");
+{% if role == "editor" %}
+function makeStickyNote(x_pos, y_pos){
+	var stickynote = document.createElement("div");
+	stickynote.className = "comment";
+	stickynote.style.left =  x_pos + "px";
+	stickynote.style.top = y_pos + "px";
+	stickynote.setAttribute("contenteditable", "true");
+	return stickynote;
+}
+current_story.addEventListener('dblclick', function(evt) {
+	var sticky = makeStickyNote(evt.clientX, evt.clientY);
+	current_story.appendChild(sticky);
+	sticky.focus();
+	
+});
+{% endif %}
+function makeStickyNoteMarker(x_pos, y_pos) {
+	var marker = document.createElement("div");
+	marker.innerHTML = '<i class="fa fa-comment comment-marker"></i>'
+	marker.style.position = "absolute";
+	marker.style.left =  x_pos + "px";
+	marker.style.top = y_pos + "px";
+	current_story.appendChild(marker);
+}
+// Doesn't seem to work for some reason
+/*function stickynoteKeyHandlers(evt){
+	console.log("hi");
+	switch (evt.keyCode) {
+		case 13: //enter 
+			document.activeElement.blur();
+			break;
+		case 27: //escape
+			// Only works for DOM4, switch to jQuery maybe?
+			document.activeElement.remove(); 
+			break;
+		default:
+			console.log(evt.keyCode);
+			break;
+	}	
+}
+var comments = document.getElementsByClassName("comment");
+for (var i = 0; i < comments.length; i++) {
+	comments[i].addEventListener('input', stickynoteKeyHandlers(evt), false);
+}*/
+</script>
 {% endblock %}

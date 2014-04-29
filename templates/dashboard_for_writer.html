@@ -1,7 +1,6 @@
 {% extends 'base.html' %}
-{% block menu %}
+{% block navigation %}
 				<li><a href="/new"><i class="fa fa-file"></i> New story</a></li>
-				<li><a href="/import"><i class="fa fa-upload"></i> Import from Word</a></li>
 {% endblock %}
 {% block content %}
 <div class="ink-grid">
@@ -9,6 +8,7 @@
 		<div class="all-50 small-100 tiny-100">
 			<h2>Upcoming stories</h2>
 			<ul class="upcoming-stories unstyled">
+				{% set label_color = cycler('grey', 'orange') %}
 				{% for story in upcoming_stories %}
 				<li class="{{ 'edited' if story['revision_ids']|length }}">
 					<a href="/story/{{ loop.index - 1 }}/edit">
@@ -17,11 +17,7 @@
 						{% endif %}
 						{{ story['title'] }}
 					</a>
-					<menu>
-						<a href="#" class="">Preview</a>
-						<a href="#" class="space">Metadata</a>
-						<a href="#" class="space">{{ story['comments'] }} Comments</a>
-					</menu>
+					<span class="ink-label {{ label_color.next() }}">{{ story['comments'] }} <i class="fa fa-comment"></i></span>
 				</li>
 				{% endfor %}
 			</ul>

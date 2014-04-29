@@ -1,5 +1,5 @@
 {% extends 'base.html' %}
-{% block menu %}
+{% block navigation %}
 				<li>&nbsp;</li>
 {% endblock %} 
 {% block content %}
@@ -17,10 +17,7 @@
 						{% endif %}
 						{{ story['title'] }}
 					</a>
-					<menu>
-						<a href="/story/{{ loop.index - 1 }}/preview" class="space">Preview</a>
-						<a href="#" class="space">{{ story['comments'] }} Comments</a>
-					</menu>
+					{{ story['comments'] }}<i class="fa fa-comments-o"></i>
 				</div>
 			</li>
 			{% endfor %}
