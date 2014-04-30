@@ -1,12 +1,5 @@
-{% extends 'base.html' %}
-{% block navigation %}
-				<li><a href="/new"><i class="fa fa-file"></i> New story</a></li>
-{% endblock %}
-{% block content %}
-<div class="ink-grid">
-	<div class="column-group gutters">
-		<div class="all-50 small-100 tiny-100">
-			<h2>Upcoming stories</h2>
+{% macro unpublished_stories() %}
+			<h2>Your unpublished stories</h2>
 			<ul class="upcoming-stories unstyled">
 				{% set label_color = cycler('grey', 'orange') %}
 				{% for story in upcoming_stories %}
@@ -21,28 +14,32 @@
 				</li>
 				{% endfor %}
 			</ul>
-			<a href="/upcoming-stories">Actually you have (12) more...</a>
-		</div>
-		<div class="all-50 small-100 tiny-100">
-			<h2>Published stories</h2>
+			<a href="/upcoming-stories" class="ink-button">12 more...</a>
+{% endmacro %}
+
+{% macro recent_stories() %}
+			<h2>Recent stories</h2>
 			<ul class="unstyled">
-				<li >
-						<a href="/edit" >Public-key 24 hour collaboration for engineer back-end e-commerce</a>
-				</li>
-				<li>
-						<a href="/edit">Persistent actuating concept on engage ubiquitous e-services</a>
-				</li>
-				<li>
-						<a href="/edit">Adaptive reciprocal model for redefine B2B metrics</a>
-				</li>
-				<li>
-						<a href="/edit">Universal stable knowledge user with disintermediate holistic functionalities</a>
-				</li>
-				<li>
-						<a href="/edit">Front-line multi-state hub for extend wireless technologies</a>
-				</li>
+				{% for num in range(5) %}
+				<li>{% if num is odd %}<span class="ink-label orange">Unpublished</span>{% endif %}<a href="#">{{ lipsum(1, False, 5, 20) }}</a></li>
+				{% endfor %}
 			</ul>
-			<a href="/past-stories">Actually you have (147) more...</a>
+			<a href="/recent-stories" class="ink-button">See all recent stories...</a>
+{% endmacro %}
+
+
+
+{% extends 'base.html' %}
+{% block navigation %}
+{% endblock %}
+{% block content %}
+<div class="ink-grid">
+	<div class="column-group gutters">
+		<div class="all-100">
+			{{ unpublished_stories() }}
+		</div>
+		<div class="all-100">
+			{{ recent_stories() }}
 		</div>
 	</div>
 </div>

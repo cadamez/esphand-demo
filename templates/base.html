@@ -20,6 +20,7 @@
   ================================================== -->
   <link rel="stylesheet" href="{{ url_for('static', filename='css/ink.css')}}">
   <link rel="stylesheet" href="{{ url_for('static', filename='css/font-awesome.min.css')}}">
+  <link rel="stylesheet" href="{{ url_for('static', filename='gridster/jquery.gridster.min.css')}}">
   <link rel="stylesheet" href="{{ url_for('static', filename='stylesheets/esphand.css')}}">
 	{% for css_path in css_includes %}
 	<link rel="stylesheet" href="{{ url_for('static', filename=css_path)}}">
@@ -32,18 +33,31 @@
 	<script src="{{ url_for('static', filename='js/ink-all.js') }}"></script>
 	<script src="{{ url_for('static', filename='js/autoload.js') }}"></script>
 	<script src="//code.jquery.com/jquery-1.11.0.min.js"></script>
+	<script src="{{ url_for('static', filename='gridster/jquery.gridster.with-extras.min.js') }}"></script>
 	{% for script_path in js_includes %}
 	<script src="{{ url_for('static', filename=script_path)}}"></script>
 	{% endfor %}
 
 </head>
 <body>
-	<nav class="ink-navigation">
-		<ul class="menu horizontal black">
+	<header class="clearfix">
+	<button id="toggle-kitchen-sink" class="ink-button" type="button" style="display: block;"><i class="fa fa-wrench"></i> Tools</button>
+	<nav class="ink-navigation push-left" style="position:absolute; z-index:90;">
+		<ul class="menu vertical black">
 			{% block navigation %}{% endblock %} 
-			<li ><a href="/logout" >Logged in as <em>{{ username }}</em>. <i class="fa fa-power-off"></i> Log out</a></li>
+			<li><a href="/new"><i class="fa fa-file"></i> New story</a></li>
+			<li><a href="#"><i class="fa fa-picture-o"></i> View assets</a></li>
+			<li><a href="#">Other utilities</a>
+				<ul class="submenu flyout right">
+					<li><a href="/import"><i class="fa fa-upload"></i> Import from Word</a></li>
+					<li><a href="#" id="myModalTrigger"><i class="fa fa-cog"></i> Customize dashboard</a></li>
+					<li><a href="#">Another action</a></li>
+				</ul>
+			</li>
+			<li class="heading informational">Logged in as <em>{{ username }}</em></li>
+			<li><a href="/logout"><i class="fa fa-power-off"></i> Log out</a></li>
 		</ul>
-	</nav>
+	</nav></header>
 
 	{% with messages = get_flashed_messages() %}
 	  {% if messages %}
@@ -57,5 +71,40 @@
 
 	{% block content %}{% endblock %}
 
+<div class="ink-shade fade">
+    <div id="myModal" class="ink-modal fade" data-trigger="#myModalTrigger" data-width="40%" data-height="50%">
+        <div class="modal-header">
+            <button class="modal-close ink-dismiss"></button>
+            <h2>Configure dashboard</h2>
+        </div>
+        <div class="modal-body" id="modalContent">
+			<form class="ink-form">
+					<div class="control-group">
+						<ul class="control unstyled">
+							<li><input type="checkbox" id="cb1" name="cb1" value=""><label for="cb1">Your unpublished stories</label></li>
+							<li><input type="checkbox" id="cb2" name="cb2" value=""><label for="cb2">Assigned to you</label></li>
+							<li><input type="checkbox" id="cb3" name="cb3" value=""><label for="cb3">All recent</label></li>
+							<li><input type="checkbox" id="cb4" name="cb4" value=""><label for="cb4">All editable</label></li>
+							<li><input type="checkbox" id="cb5" name="cb5" value=""><label for="cb5">Needs factchecking</label></li>
+						</ul>
+					</div>
+				</fieldset>
+			</form>
+
+        </div>
+        <div class="modal-footer">
+            <div class="push-right">
+                <!-- Anything with the ink-dismiss class will close the modal -->
+                <button class="ink-button caution ink-dismiss">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
 </body>
+<script>
+$(function() {
+	$("header nav").hide();
+	$("#toggle-kitchen-sink").click( function() { $("header nav").toggle(); });
+});
+</script>
 </html>

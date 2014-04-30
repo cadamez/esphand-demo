@@ -83,6 +83,10 @@ def preview_article(storyid):
 def edit_section(sectionname):
     return render_template("arrange_section.html")
 
+@app.route('/user/customize-dashboard')
+def show_all_dashboard_widgets():
+    return render_template("dashboard_widgets.html")
+
 @app.route('/login', methods=['GET', 'POST'])
 def login():
     if request.method == 'POST':
